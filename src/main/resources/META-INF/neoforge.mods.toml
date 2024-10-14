@@ -1,16 +1,16 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
 license = "LGPLv3"
-issueTrackerURL = "https://github.com/Fallen-Breath/fabric-mod-template/issues"
+issueTrackerURL = "https://github.com/Fallen-Breath/worldedit-hang-fix/issues"
 
 [[mods]]
 modId = "${id}"
 version = "${version}"
 displayName = "${name}"
-displayURL = "https://github.com/Fallen-Breath/fabric-mod-template"
+displayURL = "https://github.com/Fallen-Breath/worldedit-hang-fix"
 authors = "Fallen_Breath"
 description = '''
-Template for my fabric mods
+WorldEdit plz don't hang the Minecraft server forever on server stopping
 '''
 logoFile = "icon.png"
 

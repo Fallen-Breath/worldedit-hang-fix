@@ -4,25 +4,24 @@
   "version": "${version}",
 
   "name": "${name}",
-  "description": "Template for my fabric mods",
+  "description": "WorldEdit plz don't hang the Minecraft server forever on server stopping",
   "authors": [
     "Fallen_Breath"
   ],
   "contact": {
-    "homepage": "https://modrinth.com",
-    "sources": "https://github.com/Fallen-Breath/fabric-mod-template"
+    "homepage": "https://github.com/Fallen-Breath/worldedit-hang-fix",
+    "sources": "https://github.com/Fallen-Breath/worldedit-hang-fix"
   },
 
-  "icon": "assets/template_mod/icon.png",
+  "icon": "assets/worldedithangfix/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.fallenbreath.template_mod.TemplateMod"
     ]
   },
   "mixins": [
-    "template_mod.mixins.json"
+    "worldedithangfix.mixins.json"
   ],
 
   "depends": {

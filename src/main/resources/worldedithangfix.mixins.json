@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.fallenbreath.worldedithangfix.mixins",
+  "plugin": "me.fallenbreath.worldedithangfix.MixinConfigPlugin",
+  "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
+  "mixins": [
+    "FutureProgressListenerMixin",
+    "MinecraftDedicatedServerMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

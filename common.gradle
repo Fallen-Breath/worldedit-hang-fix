@@ -57,29 +57,14 @@ dependencies {
 		neoForge "net.neoforged:neoforge:${project.neoforge_version}"
 	}
 
-	// runtime mods
-//	if (mcVersion < 11904 && mod_brand == 'fabric') {
-//		modRuntimeOnly(mcVersion < 11900 ? "com.github.astei:lazydfu:0.1.2" : "com.github.Fallen-Breath:lazydfu:a7cfc44c0c")
-//	}
-
 	// dependencies
-//	include(modImplementation("me.fallenbreath:conditional-mixin-${mod_brand}:${project.conditionalmixin_version}"))
-//	include(annotationProcessor(implementation("io.github.llamalad7:mixinextras-${mod_brand}:${project.mixinextras_version}")))
+	include(modImplementation("me.fallenbreath:conditional-mixin-${mod_brand}:${project.conditionalmixin_version}"))
 }
 
-String MOD_ICON_PATH = 'assets/template_mod/icon.png'
-String MIXIN_CONFIG_PATH = 'template_mod.mixins.json'
-String LANG_DIR = 'assets/template_mod/lang'
-JavaVersion JAVA_COMPATIBILITY
-if (mcVersion >= 12005 && !(mcVersion < 12100 && mod_brand == 'forge')) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_21
-} else if (mcVersion >= 11800) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_17
-} else if (mcVersion >= 11700) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_16
-} else {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
-}
+String MOD_ICON_PATH = 'assets/worldedithangfix/icon.png'
+String MIXIN_CONFIG_PATH = 'worldedithangfix.mixins.json'
+String LANG_DIR = 'assets/worldedithangfix/lang'
+JavaVersion JAVA_COMPATIBILITY = mod_brand == 'neoforge' ? JavaVersion.VERSION_21 : JavaVersion.VERSION_1_8
 JavaVersion MIXIN_COMPATIBILITY_LEVEL = JAVA_COMPATIBILITY
 
 loom {
@@ -266,16 +251,5 @@ publishing {
 	repositories {
 		// mavenLocal()
 
-//		// [FEATURE] FALLENS_MAVEN
-//		maven {
-//			url = fullArtifactVersion.endsWith("SNAPSHOT") ? "https://maven.fallenbreath.me/snapshots" : "https://maven.fallenbreath.me/releases"
-//			credentials(PasswordCredentials) {
-//				username = 'fallen'
-//				password = System.getenv("FALLENS_MAVEN_TOKEN")
-//			}
-//			authentication {
-//				basic(BasicAuthentication)
-//			}
-//		}
 	}
 }
