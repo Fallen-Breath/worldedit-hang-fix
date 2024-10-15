@@ -24,6 +24,6 @@ side = "BOTH"
 [[dependencies."${id}"]]
 modId = "worldedit"
 mandatory = true
-versionRange = "[7.0.0,)"
+versionRange = ""
 ordering = "NONE"
 side = "BOTH"
