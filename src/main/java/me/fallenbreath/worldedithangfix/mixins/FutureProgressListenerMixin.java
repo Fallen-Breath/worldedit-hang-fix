@@ -29,13 +29,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Timer;
 
+@SuppressWarnings("UnresolvedMixinReference")
 @Restriction(require = @Condition(value = "worldedit", versionPredicates = ">=7.0.0"))
 @Pseudo
 @Mixin(targets = "com.sk89q.worldedit.command.util.FutureProgressListener")
 public abstract class FutureProgressListenerMixin
 {
 	/**
-	 * Ensure the timer thread is a daemon thread, or the server will be hung forever
+	 * Ensure the timer thread is a daemon thread, or the server will hang forever
 	 */
 	@Redirect(
 			method = "<clinit>",

@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "${name}",
-  "description": "WorldEdit plz don't hang the Minecraft server forever on server stopping",
+  "description": "A simple mod that prevents WorldEdit from hanging the Minecraft server when the server is stopping",
   "authors": [
     "Fallen_Breath"
   ],

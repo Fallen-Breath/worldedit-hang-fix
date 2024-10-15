@@ -10,7 +10,7 @@ displayName = "${name}"
 displayURL = "https://github.com/Fallen-Breath/worldedit-hang-fix"
 authors = "Fallen_Breath"
 description = '''
-WorldEdit plz don't hang the Minecraft server forever on server stopping
+A simple mod that prevents WorldEdit from hanging the Minecraft server when the server is stopping
 '''
 logoFile = "icon.png"
 

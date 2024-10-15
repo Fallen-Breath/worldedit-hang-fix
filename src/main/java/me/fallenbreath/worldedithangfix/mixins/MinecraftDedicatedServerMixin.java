@@ -37,7 +37,8 @@ import java.util.concurrent.ExecutorService;
 public abstract class MinecraftDedicatedServerMixin
 {
 	/**
-	 * Shutdown WorldEdit.getInstance().getExecutorService(), or the server will be hung for a while
+	 * Shutdown WorldEdit.getInstance().getExecutorService(), or the server will hang for a while (<60s)
+	 * See also: {@link com.sk89q.worldedit.util.concurrency.EvenMoreExecutors#newBoundedCachedThreadPool}
 	 */
 	@Inject(method = "shutdown", at = @At("TAIL"))
 	private void shutdownWorldEditTaskExecutor(CallbackInfo ci)
