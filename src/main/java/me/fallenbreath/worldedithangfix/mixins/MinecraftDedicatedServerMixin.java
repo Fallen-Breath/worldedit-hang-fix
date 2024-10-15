@@ -53,6 +53,7 @@ public abstract class MinecraftDedicatedServerMixin
 			return;
 		}
 
+		WorldEditHangFixMod.LOGGER.debug("Shutting down the executor service of WorldEdit");
 		executorService.shutdown();
 	}
 }

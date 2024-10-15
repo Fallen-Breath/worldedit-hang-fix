@@ -20,6 +20,7 @@
 
 package me.fallenbreath.worldedithangfix.mixins;
 
+import me.fallenbreath.worldedithangfix.WorldEditHangFixMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,6 +47,7 @@ public abstract class FutureProgressListenerMixin
 	)
 	private static Timer replaceWithTimerWithDaemonThread()
 	{
+		WorldEditHangFixMod.LOGGER.debug("Making the FutureProgressListener#timer runs on a daemon thread");
 		return new Timer(true);
 	}
 }
