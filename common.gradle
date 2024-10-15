@@ -58,7 +58,6 @@ dependencies {
 	}
 
 	// dependencies
-	include(modImplementation("me.fallenbreath:conditional-mixin-${mod_brand}:${project.conditionalmixin_version}"))
 }
 
 String MOD_ICON_PATH = 'assets/worldedithangfix/icon.png'

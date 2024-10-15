@@ -20,8 +20,6 @@
 
 package me.fallenbreath.worldedithangfix.mixins;
 
-import me.fallenbreath.conditionalmixin.api.annotation.Condition;
-import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.fallenbreath.worldedithangfix.WorldEditHangFixMod;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +30,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 
-@Restriction(require = @Condition(value = "worldedit", versionPredicates = ">=7.0.0"))
 @Mixin(MinecraftDedicatedServer.class)
 public abstract class MinecraftDedicatedServerMixin
 {
