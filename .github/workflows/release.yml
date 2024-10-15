@@ -123,12 +123,18 @@ jobs:
           path: gradle.properties
           properties: 'mod_name mod_version'
 
+      # temp fix for properties reading
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
       - name: Read version-specific properties
         id: properties_v
-        uses: madhead/read-java-properties@latest
-        with:
-          file: ${{ format('versions/{0}/gradle.properties', matrix.subproject) }}
-          all: true
+        run: |
+          pip install jproperties
+          python .github/workflows/scripts/properties_reader.py "$FILE"
+        env:
+          FILE: ${{ format('versions/{0}/gradle.properties', matrix.subproject) }}
 
       - name: Prepare file information
         id: file_info
@@ -188,7 +194,7 @@ jobs:
           version-type: release
 
           loaders: ${{ matrix.mod_brand }}
-          game-versions: ${{ steps.properties_v.outputs.value }}
+          game-versions: ${{ steps.properties_v.outputs.game_versions }}
           game-version-filter: any
           dependencies: 'worldedit'  # declare the dependencies explicitly, so mc-publish won't try to load from fabric.mod.json
 
