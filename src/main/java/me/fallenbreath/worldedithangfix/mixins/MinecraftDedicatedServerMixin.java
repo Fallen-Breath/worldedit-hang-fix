@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 
 @Mixin(MinecraftDedicatedServer.class)
@@ -45,10 +46,22 @@ public abstract class MinecraftDedicatedServerMixin
 		{
 			Class<?> clazz = Class.forName("com.sk89q.worldedit.WorldEdit");
 			Object we = clazz.getMethod("getInstance").invoke(null);
-			executorService = (ExecutorService)clazz.getMethod("getExecutorService").invoke(we);
+			Method method = clazz.getMethod("getExecutorService");
+			executorService = (ExecutorService)method.invoke(we);
 		}
 		catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e)
 		{
+			if (e instanceof InvocationTargetException && e.getCause() instanceof IllegalStateException && "Currently invalid".equals(e.getCause().getMessage()))
+			{
+				// WorldEdit v7.3.11 fixes this executor services issue
+				// https://github.com/EngineHub/WorldEdit/pull/2715
+				// With WorldEdit v7.3.11, calling getExecutorService() will get an IllegalStateException, since it has stopped already
+				// see also:
+				//   com.sk89q.worldedit.extension.platform.PlatformManager#handleNewPlatformUnready
+				//   com.sk89q.worldedit.extension.platform.PlatformManager#getExecutorService
+				//   com.sk89q.worldedit.util.lifecycle.Lifecycled#valueOrThrow
+				return;
+			}
 			WorldEditHangFixMod.LOGGER.error("Failed to shutdown worldedit's task executor", e);
 			return;
 		}
