@@ -7,9 +7,9 @@
 
 A simple mod that prevents WorldEdit from hanging the Minecraft server when the server is stopping
 
-It fixes https://github.com/EngineHub/WorldEdit/issues/2459. What it does:
+It completely fixes https://github.com/EngineHub/WorldEdit/issues/2459. What it does:
 
-- Shutdown `WorldEdit.getInstance().getExecutorService()` on dedicated server stop (or it will hang the server for maximum 60s)
+- Shutdown `WorldEdit.getInstance().getExecutorService()` on dedicated server stop (or it will hang the server for maximum 60s) (WorldEdit had it fixed in v7.3.11)
 - Ensure the singleton `java.util.Timer` object in `FutureProgressListener` runs on a daemon thread (or it will hang the server forever)
 
 Supported environment
