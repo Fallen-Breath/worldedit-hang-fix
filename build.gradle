@@ -1,17 +1,19 @@
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
-	id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
+	id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
 
 	// https://github.com/ReplayMod/preprocessor
 	// https://github.com/Fallen-Breath/preprocessor
-	id 'com.replaymod.preprocess' version 'ce1aeb2b'
+	id 'com.replaymod.preprocess' version 'c5abb4fb12'
 
 	// https://github.com/Fallen-Breath/yamlang
-	id 'me.fallenbreath.yamlang' version '1.4.0' apply false
+	id 'me.fallenbreath.yamlang' version '1.5.0' apply false
 }
 
 preprocess {
+	strictExtraMappings = false
+
 	def mc120_fabric = createNode('1.20.6-fabric', 1_20_06, '')
 	def mc120_forge = createNode('1.20.6-forge' , 1_20_06, '')
 	def mc120_neoforge = createNode('1.20.6-neoforge', 1_20_06, '')
@@ -39,7 +41,7 @@ tasks.register('buildAndGather') {
 					exclude '*-dev.jar', '*-sources.jar', '*-shadow.jar'
 				}
 				into buildLibs(rootProject)
-				duplicatesStrategy DuplicatesStrategy.INCLUDE
+				duplicatesStrategy = DuplicatesStrategy.INCLUDE
 			}
 		}
 	}

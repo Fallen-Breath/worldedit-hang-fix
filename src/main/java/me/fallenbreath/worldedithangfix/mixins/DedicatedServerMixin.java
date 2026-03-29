@@ -21,7 +21,7 @@
 package me.fallenbreath.worldedithangfix.mixins;
 
 import me.fallenbreath.worldedithangfix.WorldEditHangFixMod;
-import net.minecraft.server.dedicated.MinecraftDedicatedServer;
+import net.minecraft.server.dedicated.DedicatedServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,14 +31,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 
-@Mixin(MinecraftDedicatedServer.class)
-public abstract class MinecraftDedicatedServerMixin
+@Mixin(DedicatedServer.class)
+public abstract class DedicatedServerMixin
 {
 	/**
 	 * Shutdown WorldEdit.getInstance().getExecutorService(), or the server will hang for a while (<60s)
 	 * See also: {@link com.sk89q.worldedit.util.concurrency.EvenMoreExecutors#newBoundedCachedThreadPool}
 	 */
-	@Inject(method = "shutdown", at = @At("TAIL"))
+	@Inject(method = "stopServer", at = @At("TAIL"))
 	private void shutdownWorldEditTaskExecutor(CallbackInfo ci)
 	{
 		ExecutorService executorService;

@@ -47,7 +47,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get github release information
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: cardinalby/git-get-release-action@1.2.5
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -93,7 +92,6 @@ jobs:
           path: build-artifacts
 
       - name: Get github release information
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         id: get_release
         uses: cardinalby/git-get-release-action@1.2.5
         env:
@@ -118,10 +116,10 @@ jobs:
 
       - name: Read common properties
         id: properties_g
-        uses: christian-draeger/read-properties@1.1.1
+        uses: BrycensRanch/read-properties-action@v1
         with:
-          path: gradle.properties
-          properties: 'mod_name mod_version'
+          file: gradle.properties
+          all: true
 
       # temp fix for properties reading
       - uses: actions/setup-python@v5
@@ -130,11 +128,10 @@ jobs:
 
       - name: Read version-specific properties
         id: properties_v
-        run: |
-          pip install jproperties
-          python .github/workflows/scripts/properties_reader.py "$FILE"
-        env:
-          FILE: ${{ format('versions/{0}/gradle.properties', matrix.subproject) }}
+        uses: BrycensRanch/read-properties-action@v1
+        with:
+          file: ${{ format('versions/{0}/gradle.properties', matrix.subproject) }}
+          all: true
 
       - name: Prepare file information
         id: file_info
@@ -163,7 +160,7 @@ jobs:
           result-encoding: string
         env:
           CHANGELOG: |-
-            ${{ format('{0}{1}', github.event.release.body, steps.get_release.outputs.body) }}
+            ${{ steps.get_release.outputs.body }}
             
             -------
             
@@ -174,7 +171,7 @@ jobs:
             - Built from: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Publish Minecraft Mods
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kira-NT/mc-publish@v3.3
         with:
           # https://modrinth.com/settings/pats
           modrinth-id: uz1wuff3
@@ -198,7 +195,7 @@ jobs:
           game-version-filter: any
           dependencies: 'worldedit'  # declare the dependencies explicitly, so mc-publish won't try to load from fabric.mod.json
 
-          github-changelog: ${{ format('{0}{1}', github.event.release.body, steps.get_release.outputs.body) }}
+          github-changelog: ${{ steps.get_release.outputs.body }}
           modrinth-changelog: ${{ steps.changelog.outputs.result }}
           curseforge-changelog: ${{ steps.changelog.outputs.result }}
 

@@ -7,9 +7,10 @@ __author__ = 'Fallen_Breath'
 import functools
 import glob
 import hashlib
-import jproperties
 import json
 import os
+
+import jproperties
 
 
 def read_prop(file_name: str, key: str) -> str:

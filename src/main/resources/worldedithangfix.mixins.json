@@ -5,7 +5,7 @@
   "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
   "mixins": [
     "FutureProgressListenerMixin",
-    "MinecraftDedicatedServerMixin"
+    "DedicatedServerMixin"
   ],
   "client": [
   ],
