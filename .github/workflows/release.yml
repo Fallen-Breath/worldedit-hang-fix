@@ -171,12 +171,12 @@ jobs:
         uses: Kira-NT/mc-publish@v3.3
         with:
           # https://modrinth.com/settings/pats
-          modrinth-id: uz1wuff3
-          modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
+#          modrinth-id: fo0Bar
+#          modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
 
           # https://legacy.curseforge.com/account/api-tokens
-          curseforge-id: 1122137
-          curseforge-token: ${{ secrets.CF_API_TOKEN }}
+#          curseforge-id: 314159
+#          curseforge-token: ${{ secrets.CF_API_TOKEN }}
 
           github-tag: ${{ steps.release_info.outputs.tag_name }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -184,13 +184,13 @@ jobs:
           files: ${{ steps.file_info.outputs.path }}
 
           name: ${{ format('[{0}] {1} v{2} for mc{3}', matrix.mod_brand, steps.properties_g.outputs.mod_name, steps.properties_g.outputs.mod_version, steps.properties_v.outputs.minecraft_version) }}
-          version: ${{ format('v{1}-mc{0}-{2}', steps.properties_v.outputs.minecraft_version, steps.properties_g.outputs.mod_version, matrix.mod_brand) }}
+          version: ${{ format('v{1}-mc{0}{2}', steps.properties_v.outputs.minecraft_version, steps.properties_g.outputs.mod_version, matrix.mod_brand != 'merged' && format('-{0}', matrix.mod_brand) || '') }}
           version-type: release
 
-          loaders: ${{ matrix.mod_brand }}
+          loaders: ${{ matrix.mod_brand == 'merged' && '["fabric", "forge", "neoforge"]' || matrix.mod_brand }}
           game-versions: ${{ steps.properties_v.outputs.game_versions }}
           game-version-filter: any
-          dependencies: 'worldedit'  # declare the dependencies explicitly, so mc-publish won't try to load from fabric.mod.json
+          dependencies: ''  # declare the dependencies explicitly, so mc-publish won't try to load from fabric.mod.json
 
           github-changelog: ${{ steps.get_release.outputs.body }}
           modrinth-changelog: ${{ steps.changelog.outputs.result }}

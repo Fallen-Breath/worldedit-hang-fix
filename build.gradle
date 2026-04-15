@@ -2,7 +2,7 @@ plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
 	id 'dev.architectury.loom' version '1.14-SNAPSHOT' apply false
-	id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT' apply false
+	id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT' apply false
 
 	// https://github.com/ReplayMod/preprocessor
 	// https://github.com/Fallen-Breath/preprocessor
@@ -16,13 +16,11 @@ preprocess {
 	strictExtraMappings = false
 
 	def mc120_fabric = createNode('1.20.6-fabric', 1_20_06, '')
-	def mc120_forge = createNode('1.20.6-forge' , 1_20_06, '')
 	def mc120_neoforge = createNode('1.20.6-neoforge', 1_20_06, '')
-	def mc260100_fabric = createNode('26.1-fabric', 26_01_00, '')
+	def mc26_merged = createNode('26.1.2-merged', 26_01_02, '')
 
-	mc120_fabric.link(mc120_forge, null)
 	mc120_fabric.link(mc120_neoforge, null)
-	mc120_fabric.link(mc260100_fabric, null)
+	mc120_fabric.link(mc26_merged, null)
 
 	// See https://github.com/Fallen-Breath/fabric-mod-template/blob/1d72d77a1c5ce0bf060c2501270298a12adab679/build.gradle#L55-L63
 	for (final def node in getNodes()) {

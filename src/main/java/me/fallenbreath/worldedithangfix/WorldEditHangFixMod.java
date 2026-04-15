@@ -20,20 +20,13 @@
 
 package me.fallenbreath.worldedithangfix;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
-//#if FORGE
-//$$ import net.minecraftforge.fml.common.Mod;
-//#elseif NEOFORGE
-//$$ import net.neoforged.fml.common.Mod;
-//#endif
-
-//#if FORGE_LIKE
-//$$ @Mod(WorldEditHangFixMod.MOD_ID)
-//#endif
+@net.minecraftforge.fml.common.Mod(WorldEditHangFixMod.MOD_ID)
+@net.neoforged.fml.common.Mod(WorldEditHangFixMod.MOD_ID)
 public class WorldEditHangFixMod
 {
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final String MOD_ID = "worldedithangfix";
 }
