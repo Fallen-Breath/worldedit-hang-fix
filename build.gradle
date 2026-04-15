@@ -1,3 +1,6 @@
+import com.replaymod.gradle.preprocess.Node
+import groovy.json.JsonSlurper
+
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
@@ -12,15 +15,42 @@ plugins {
 	id 'me.fallenbreath.yamlang' version '1.5.0' apply false
 }
 
+def linkNode(Node src, Node dst) {
+	def mappingFile = rootProject.file("versions/mapping-${src.project}-${dst.project}.txt")
+	src.link(dst, mappingFile.isFile() ? mappingFile : null)
+}
+
 preprocess {
 	strictExtraMappings = false
 
-	def mc120_fabric = createNode('1.20.6-fabric', 1_20_06, '')
-	def mc120_neoforge = createNode('1.20.6-neoforge', 1_20_06, '')
-	def mc26_merged = createNode('26.1.2-merged', 26_01_02, '')
+	def settings = new JsonSlurper().parseText(file('settings.json').text)
+	def all_versions = new ArrayList<>(settings.versions)
+	Map<String, Node> all_nodes = [:]
 
-	mc120_fabric.link(mc120_neoforge, null)
-	mc120_fabric.link(mc26_merged, null)
+	for (String version : all_versions) {
+		String[] versionParts = version.split("-")[0].split("\\.")
+		if (versionParts.size() == 2) {
+			versionParts = [versionParts[0], versionParts[1], "0"]
+		}
+		int versionId = Integer.parseInt(versionParts[0]) * 10000 + Integer.parseInt(versionParts[1]) * 100 + Integer.parseInt(versionParts[2])
+		all_nodes[version] = createNode(version, versionId, '')
+	}
+
+	Node prev_fabric_node = null
+	for (String version : all_versions) {
+		def (mc_version, mod_brand) = version.split("-")
+		def node = all_nodes[version]
+		switch (mod_brand) {
+			case ["fabric", "merged"]:
+				if (prev_fabric_node != null) {
+					linkNode(prev_fabric_node, all_nodes[version])
+				}
+				prev_fabric_node = node
+				break
+			default:
+				linkNode(all_nodes["${mc_version}-fabric"], all_nodes[version])
+		}
+	}
 
 	// See https://github.com/Fallen-Breath/fabric-mod-template/blob/1d72d77a1c5ce0bf060c2501270298a12adab679/build.gradle#L55-L63
 	for (final def node in getNodes()) {
