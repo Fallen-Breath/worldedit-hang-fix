@@ -11,6 +11,7 @@ It completely fixes https://github.com/EngineHub/WorldEdit/issues/2459. What it 
 
 - Shutdown `WorldEdit.getInstance().getExecutorService()` on dedicated server stop (or it will hang the server for maximum 60s) (WorldEdit had it fixed in v7.3.11)
 - Ensure the singleton `java.util.Timer` object in `FutureProgressListener` runs on a daemon thread (or it will hang the server forever)
+- Ensure the thread created in `RecursiveDirectoryWatcher#start#` is a daemon thread (or it will hang the server forever, in at least WorldEdit fabric >= v7.4.1)
 
 Supported environment
 
