@@ -47,7 +47,7 @@ public abstract class FutureProgressListenerMixin
 	)
 	private static Timer replaceWithTimerWithDaemonThread()
 	{
-		WorldEditHangFixMod.LOGGER.debug("Making the FutureProgressListener#timer runs on a daemon thread");
+		WorldEditHangFixMod.LOGGER.debug("Ensuring that the FutureProgressListener#timer runs on a daemon thread");
 		return new Timer(true);
 	}
 }
